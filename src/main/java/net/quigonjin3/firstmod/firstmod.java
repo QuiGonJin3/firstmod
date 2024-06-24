@@ -1,6 +1,10 @@
-package net.joel.firstmod;
+package net.quigonjin3.firstmod;
 
 import com.mojang.logging.LogUtils;
+import net.quigonjin3.firstmod.block.ModBlocks;
+import net.quigonjin3.firstmod.item.ModCreativeModeTabs;
+import net.quigonjin3.firstmod.item.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -24,6 +28,11 @@ public class firstmod {
     public firstmod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModCreativeModeTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -37,6 +46,9 @@ public class firstmod {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+            event.accept(ModItems.SAPPHIRE);
+        }
 
     }
 
